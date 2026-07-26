@@ -120,11 +120,20 @@ const HeroSlider: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7 }}
             className="hero-bg"
-            style={{
-              backgroundImage: slide.poster ? `url(${slide.poster})` : undefined,
-              background: slide.poster ? undefined : 'radial-gradient(circle at 60% 30%, #1e1b4b, #0a0d18)',
-            }}
-          />
+          >
+            {slide.poster ? (
+              <img
+                src={slide.poster}
+                alt={slide.title}
+                className="hero-bg-img"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            ) : (
+              <div className="hero-bg-gradient" />
+            )}
+          </motion.div>
         </AnimatePresence>
 
         <div className="hero-overlay" />

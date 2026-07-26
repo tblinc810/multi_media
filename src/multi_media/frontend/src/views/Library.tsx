@@ -55,6 +55,13 @@ const Library: React.FC = () => {
           let videoItem: MediaItem | null = null;
           if (isVideo(item)) {
             videoItem = item;
+          } else if (item.isFolder) {
+            // Peek inside the folder to find a playable video
+            try {
+              const folderUrl = new URL(item.href);
+              const children = await fetchDirectory(folderUrl.pathname);
+              videoItem = children.find(isVideo) ?? null;
+            } catch { /* ignore */ }
           }
 
           if (!cancelled) {

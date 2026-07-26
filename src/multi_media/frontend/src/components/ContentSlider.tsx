@@ -201,11 +201,12 @@ const ContentSlider: React.FC<ContentSliderProps> = ({
       {/* Cards track */}
       {loading ? (
         <div className="slider-track">
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="slider-card">
-              <div className="card-thumb card-skeleton" />
+              <div className="card-thumb card-skeleton" style={{ height: 240 }} />
               <div className="card-footer">
-                <div className="skeleton-line" style={{ width: '80%' }} />
+                <div className="skeleton-line" style={{ width: '75%' }} />
+                <div className="skeleton-line" style={{ width: '45%', marginTop: 5 }} />
               </div>
             </div>
           ))}
@@ -225,14 +226,17 @@ const ContentSlider: React.FC<ContentSliderProps> = ({
               onClick={() => handleCardClick(card)}
               style={{ cursor: 'pointer' }}
             >
-              <div className="card-thumb" style={{ overflow: 'hidden' }}>
+              <div className="card-thumb">
                 <CardThumbnail
                   thumbs={card.thumbs}
                   title={card.item.title}
                   isFolder={card.item.isFolder}
                 />
 
-                {/* Hover overlay */}
+                {/* Bottom title label on hover */}
+                <span className="card-thumb-label">{card.item.title}</span>
+
+                {/* Hover overlay with play button */}
                 <AnimatePresence>
                   {hovered === card.item.href && (
                     <motion.div
@@ -246,7 +250,7 @@ const ContentSlider: React.FC<ContentSliderProps> = ({
                         className="card-play-btn"
                         style={{ background: accentColor }}
                       >
-                        <Play size={20} fill="white" />
+                        <Play size={22} fill="white" />
                       </div>
                     </motion.div>
                   )}
